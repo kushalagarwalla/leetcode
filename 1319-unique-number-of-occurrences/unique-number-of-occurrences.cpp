@@ -16,7 +16,7 @@ public:
             }
             ans.push_back(count);
             i+=count;
-        } 
+        }  
        i=0;
        sort(ans.begin(),ans.end());
        for(i=0;i<ans.size()-1;i++) 
