@@ -31,6 +31,7 @@ public:
         }
     }
     Node* copyRandomList(Node* head) {
+        // Approach 1: Using Map
         Node* cloneHead=NULL;
         Node* cloneTail=NULL;
         Node* curr=head;
@@ -60,5 +61,62 @@ public:
             cloneNode=cloneNode->next;
         }
         return cloneHead;
+        
+        /* Approach 2: 
+        Node* cloneHead=NULL;
+        Node* cloneTail=NULL;
+        Node* curr=head;
+        //step 1: create a copy of the list
+        while(curr!=NULL)
+        {
+            insertAtTail(cloneHead,cloneTail,curr->val);
+            curr=curr->next;
+        }
+
+        //step 2: add cloneNodes in between Original list
+        Node* originalNode=head;
+        Node* cloneNode=cloneHead;
+        while(originalNode!=NULL && cloneNode!=NULL)
+        {
+            Node* next=originalNode->next;
+            originalNode->next=cloneNode;
+            originalNode=next;
+
+            next=cloneNode;
+            cloneNode->next=originalNode;
+            cloneNode=next;
+        }
+
+        //step 3: copy random pointer
+        Node* temp=head;
+        while(temp!=NULL)
+        {
+            if(temp->next!=NULL)
+            {
+                //if temp->random is NULL, then it will not have next.
+                //In this case we will set cloneNode's random as NULL
+                temp->next->random= temp->random ? temp->random->next : temp->random;
+            }
+            temp=temp->next->next;
+        }
+
+        //step 4: Revert step2 changes
+        originalNode=head;
+        cloneNode=cloneHead;
+        while(originalNode!=NULL && cloneNode!=NULL)
+        {
+            originalNode->next=cloneNode->next;
+            originalNode=originalNode->next;
+
+            if(originalNode!=NULL)
+            {
+                cloneNode->next=originalNode;
+            }
+            cloneNode=cloneNode->next;
+        }
+
+        //step5: return ans;
+        return cloneHead;
+        */
     }
 };
