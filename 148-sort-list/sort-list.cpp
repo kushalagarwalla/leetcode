@@ -31,6 +31,7 @@ public:
 
         ListNode* ans=new ListNode(-1);
         ListNode* temp=ans;
+        //merge both the arrays
         while(left!=NULL && right!=NULL)
         {
             if(left->val < right->val)
