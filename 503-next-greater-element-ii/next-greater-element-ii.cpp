@@ -14,6 +14,7 @@ public:
             }
             if(i<n)
             {
+                //handle -1 case separately 
                 if(s.empty())
                     ans[i]=-1;
                 else
