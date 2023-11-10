@@ -1,7 +1,7 @@
 class Solution {
 public:
     int firstUniqChar(string s) {
-        map<char,int> count;
+        unordered_map<char,int> count;
         queue<char>q;
         for(int i=0;i<s.length();i++)
         {
