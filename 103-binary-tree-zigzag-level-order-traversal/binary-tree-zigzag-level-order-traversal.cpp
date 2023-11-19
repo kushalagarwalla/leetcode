@@ -15,9 +15,11 @@ public:
         vector<vector<int>> ans;
         if(root==NULL)
             return ans;
+        
         queue<TreeNode*> q;
         q.push(root);
-        bool leftToRight=true;
+        bool leftToRight= true;
+        
         while(!q.empty())
         {
             int size=q.size();
@@ -26,14 +28,14 @@ public:
             {
                 TreeNode* temp=q.front();
                 q.pop();
-                int index= leftToRight?i:size-i-1;
+                int index=leftToRight?i:size-i-1;
                 v[index]=temp->val;
                 if(temp->left)
                     q.push(temp->left);
                 if(temp->right)
                     q.push(temp->right);
             }
-            leftToRight=leftToRight?false:true;
+            leftToRight=!leftToRight;
             ans.push_back(v);
         }
         return ans;
