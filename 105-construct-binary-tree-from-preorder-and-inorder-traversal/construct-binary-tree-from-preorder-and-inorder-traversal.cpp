@@ -11,17 +11,13 @@
  */
 class Solution {
 public:
-    int findPosition(int element,vector<int> inorder,int size)
+    void createMap(map<int,int> &nodeToIndex,vector<int> inorder,int size)
     {
         for(int i=0;i<size;i++)
-        {
-            if(inorder[i]==element)
-                return i;
-        }
-        return -1;
+            nodeToIndex[inorder[i]]=i;
     }
 
-    TreeNode* solve(vector<int> preorder, vector<int> inorder, int &index, int inorderStart, int inorderEnd, int size)
+    TreeNode* solve(vector<int> preorder, vector<int> inorder, int &index, int inorderStart, int inorderEnd, int size, map<int,int> &nodeToIndex)
     {
         //base case
         if(index>=size || inorderStart>inorderEnd)
@@ -31,10 +27,10 @@ public:
         TreeNode* root=new TreeNode(element);
         index++; //move to next element
         //find root position in inorder array
-        int position= findPosition(element,inorder,size);
+        int position= nodeToIndex[element];
         //recursive calls for left and right
-        root->left=solve(preorder,inorder,index,inorderStart,position-1,size);
-        root->right=solve(preorder,inorder,index,position+1,inorderEnd,size);
+        root->left=solve(preorder,inorder,index,inorderStart,position-1,size,nodeToIndex);
+        root->right=solve(preorder,inorder,index,position+1,inorderEnd,size,nodeToIndex);
 
         return root;
     }
@@ -42,7 +38,10 @@ public:
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
         int preOrderIndex=0;
         int n=inorder.size();
-        TreeNode* ans= solve(preorder,inorder,preOrderIndex,0,n-1,n);
+        map<int,int> nodeToIndex;
+        //create map for storing the index of nodes present in inorder array
+        createMap(nodeToIndex,inorder,n);
+        TreeNode* ans= solve(preorder,inorder,preOrderIndex,0,n-1,n,nodeToIndex);
         return ans;
     }
 };
