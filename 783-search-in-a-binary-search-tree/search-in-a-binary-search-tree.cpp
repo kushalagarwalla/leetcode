@@ -22,6 +22,7 @@ public:
             return searchBST(root->right,val);
         else
             return searchBST(root->left,val); */
+            
         //Iterative Approach
         TreeNode* temp=root;
         while(temp!=NULL)
