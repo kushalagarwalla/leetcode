@@ -21,26 +21,30 @@
  */
 class Solution {
 public:
-    TreeNode* ConvertToBST(int s, int e, vector<int> &v)
+    ListNode* findMid(ListNode* head)
     {
-        if(s>e)
-            return NULL;
-        int mid=(s+e)/2;
-        TreeNode* root=new TreeNode(v[mid]);
-        root->left=ConvertToBST(s,mid-1,v);
-        root->right=ConvertToBST(mid+1,e,v);
-        return root;
+        ListNode* prev=NULL;
+        ListNode* curr1=head;
+        ListNode* curr2=head;
+        while(curr1!=NULL && curr1->next!=NULL)
+        {
+            prev=curr2;
+            curr2=curr2->next;
+            curr1=curr1->next->next;
+        }
+        prev->next=NULL;
+        return curr2;
     }
+
     TreeNode* sortedListToBST(ListNode* head) {
         if(head==NULL)
             return NULL;
-        vector<int> v;
-        ListNode* temp=head;
-        while(temp!=NULL)
-        {
-            v.push_back(temp->val);
-            temp=temp->next;
-        }
-        return ConvertToBST(0,v.size()-1,v);
+        if (!head->next)
+            return new TreeNode(head->val);
+        ListNode* mid=findMid(head);
+        TreeNode* root=new TreeNode(mid->val);
+        root->left=sortedListToBST(head);
+        root->right=sortedListToBST(mid->next);
+        return root;
     }
 };
